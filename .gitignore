@@ -6,17 +6,18 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.exe.config
+*.vshost.exe
+*.vshost.exe.config
+*.vshost.exe.manifest
 
 # Build results
-[Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 # Roslyn cache directories
