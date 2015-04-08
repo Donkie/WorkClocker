@@ -12,13 +12,14 @@
 *.vshost.exe.manifest
 
 # Build results
-[Dd]ebugPublic/
+[Dd]ebug/
 [Rr]eleases/
 x64/
 x86/
 build/
 bld/
 [Oo]bj/
+bin/
 
 # Roslyn cache directories
 *.ide/

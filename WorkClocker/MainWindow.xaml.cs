@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace WorkClocker
@@ -21,11 +10,11 @@ namespace WorkClocker
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        public DispatcherTimer DispatcherTimer;
-        public Dictionary<string, int> AppTimes;
-        public List<string> AppExcludeList;
+        private readonly DispatcherTimer _dispatcherTimer = new DispatcherTimer {Interval = new TimeSpan(0,0,1)};
+        private readonly Dictionary<string, int> _appTimes = new Dictionary<string, int>();
+        private readonly List<string> _appExcludeList = new List<string>();
 
         private int _totaltime;
         public int TotalTime
@@ -62,47 +51,26 @@ namespace WorkClocker
 
         private void SetOrAddAppTime(string app)
         {
-            if (AppTimes.ContainsKey(app))
+            if (_appTimes.ContainsKey(app))
             {
-                AppTimes[app] = AppTimes[app] + 1;
+                _appTimes[app]++;
             }
             else
             {
-                AppTimes.Add(app, 1);
+                _appTimes.Add(app, 1);
             }
         }
 
         public void CalculateTimes()
         {
-            var worked = 0;
-            var excluded = 0;
-
-            foreach (var kv in AppTimes)
-            {
-                var appname = kv.Key;
-                var apptime = kv.Value;
-
-                if (AppExcludeList.Contains(appname))
-                    excluded += apptime;
-                else
-                    worked += apptime;
-            }
-
-            ExcludedTime = excluded;
-            WorkedTime = worked;
+            WorkedTime = _appTimes.Where(o => !_appExcludeList.Contains(o.Key)).Sum(o => o.Value);
+	        ExcludedTime = _appTimes.Where(o => _appExcludeList.Contains(o.Key)).Sum(o => o.Value);
         }
 
         public MainWindow()
         {
             InitializeComponent();
-
-            DispatcherTimer = new DispatcherTimer();
-            DispatcherTimer.Tick += DispatcherTimer_Tick;
-            DispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-
-            TotalTime = 0;
-            AppTimes = new Dictionary<string, int>();
-            AppExcludeList = new List<string>();
+            _dispatcherTimer.Tick += DispatcherTimer_Tick;
         }
 
         private void DispatcherTimer_Tick(object sender, EventArgs e)
@@ -118,26 +86,24 @@ namespace WorkClocker
 
         private void GenerateList()
         {
-            AppItems.Items.Clear();
-
-            foreach (var kv in AppTimes)
-            {
-                var txt = String.Format("{0} - {1}", TimeSpan.FromSeconds(kv.Value).ToString("g"), kv.Key);
-                var item = new ListBoxItem {Content = txt};
-                AppItems.Items.Add(item);
-            }
+	        AppItems.Items.Clear();
+			
+	        foreach (var item in _appTimes.Select(kv => string.Format("{0} - {1}", TimeSpan.FromSeconds(kv.Value).ToString("g"), kv.Key)).Select(txt => new ListBoxItem {Content = txt}))
+	        {
+		        AppItems.Items.Add(item);
+	        }
         }
 
-        private void BtnStart_Click(object sender, RoutedEventArgs e)
+	    private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer.Start();
+            _dispatcherTimer.Start();
             BtnStart.IsEnabled = false;
             BtnStop.IsEnabled = true;
         }
 
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer.Stop();
+            _dispatcherTimer.Stop();
             BtnStart.IsEnabled = true;
             BtnStop.IsEnabled = false;
 
@@ -149,43 +115,41 @@ namespace WorkClocker
         {
             BtnStop_Click(sender, e);
             TotalTime = 0;
-            AppTimes.Clear();
+            _appTimes.Clear();
         }
 
         private void BtnExclude_Click(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i < AppItems.Items.Count; i++)
-            {
-                var item = (ListBoxItem)AppItems.Items[i];
-                if (!item.IsSelected) continue;
+	        foreach (var t in AppItems.SelectedItems)
+	        {
+		        var item = (ListBoxItem)t;
 
-                var s = (string) item.Content;
-                var appName = s.Substring(s.IndexOf('-')+2);
+		        var s = (string) item.Content;
+		        var appName = s.Substring(s.IndexOf('-')+2);
 
-                if (AppExcludeList.Contains(appName)) continue;
-                AppExcludeList.Add(appName);
-                item.FontStyle = FontStyles.Italic;
-            }
+		        if (_appExcludeList.Contains(appName)) continue;
+		        _appExcludeList.Add(appName);
+		        item.FontStyle = FontStyles.Italic;
+	        }
 
-            CalculateTimes();
+	        CalculateTimes();
         }
 
-        private void BtnInclude_Click(object sender, RoutedEventArgs e)
+	    private void BtnInclude_Click(object sender, RoutedEventArgs e)
         {
-            for (var i = 0; i < AppItems.Items.Count; i++)
-            {
-                var item = (ListBoxItem)AppItems.Items[i];
-                if (!item.IsSelected) continue;
+	        foreach (var t in AppItems.SelectedItems)
+	        {
+		        var item = (ListBoxItem)t;
 
-                var s = (string)item.Content;
-                var appName = s.Substring(s.IndexOf('-') + 2);
+		        var s = (string)item.Content;
+		        var appName = s.Substring(s.IndexOf('-') + 2);
 
-                if (!AppExcludeList.Contains(appName)) continue;
-                AppExcludeList.Remove(appName);
-                item.FontStyle = FontStyles.Normal;
-            }
+		        if (!_appExcludeList.Contains(appName)) continue;
+		        _appExcludeList.Remove(appName);
+		        item.FontStyle = FontStyles.Normal;
+	        }
 
-            CalculateTimes();
+	        CalculateTimes();
         }
     }
 }
