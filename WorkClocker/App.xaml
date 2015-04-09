@@ -1,8 +1,9 @@
 ﻿<Application x:Class="WorkClocker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+	<Application.Resources>
+		<system:String x:Key="AppTitle">WorkClocker</system:String>
+	</Application.Resources>
 </Application>

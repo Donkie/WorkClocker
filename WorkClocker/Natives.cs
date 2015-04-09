@@ -1,19 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace WorkClocker
 {
-	class ActiveWindow
+	class Natives
 	{
-		[DllImport("user32.dll", SetLastError = true)]
-		public static extern bool GetGUIThreadInfo(uint hTreadId, ref Guithreadinfo lpgui);
-
-		[DllImport("user32.dll")]
-		public static extern uint GetWindowThreadProcessId(uint hwnd, out uint lpdwProcessId);
-
 		[DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
 		internal static extern int GetWindowText(IntPtr hWnd, [Out] StringBuilder lpString, int nMaxCount);
+
+		[DllImport("user32.dll")]
+		static extern uint GetActiveWindow();
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct Rect
@@ -38,29 +37,31 @@ namespace WorkClocker
 			public Rect rectCaret;
 		}
 
-		const uint HWND = 0;
-		public static bool GetInfo(out Guithreadinfo lpgui)
+		[DllImport("user32.dll")]
+		public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+
+		[DllImport("user32.dll")]
+		private static extern IntPtr GetForegroundWindow();
+
+		private static string GetActiveProcessFileName(out IntPtr hwnd)
 		{
-			uint lpdwProcessId;
-			GetWindowThreadProcessId(HWND, out lpdwProcessId);
-
-			lpgui = new Guithreadinfo();
-			lpgui.cbSize = Marshal.SizeOf(lpgui);
-
-			return GetGUIThreadInfo(lpdwProcessId, ref lpgui);
+			hwnd = GetForegroundWindow();
+			uint pid;
+			GetWindowThreadProcessId(hwnd, out pid);
+			var p = Process.GetProcessById((int)pid);
+			return p.MainModule.FileName;
 		}
 
-		public static string GetFocusWindow()
+		public static WindowExe GetFocusWindow()
 		{
 			try
 			{
-				Guithreadinfo info;
-				GetInfo(out info);
-
 				var sb = new StringBuilder(256);
-				GetWindowText(info.hwndActive, sb, 256);
-
-				return sb.ToString();
+				IntPtr hwnd;
+				var str = GetActiveProcessFileName(out hwnd);
+				GetWindowText(hwnd, sb, 256);
+				var f = new FileInfo(str);
+				return new WindowExe { Title = sb.ToString(), Exe = f.Name.Remove(f.Name.Length-f.Extension.Length,f.Extension.Length)};
 			}
 			catch (AccessViolationException e)
 			{
@@ -72,5 +73,11 @@ namespace WorkClocker
 			}
 			return null;
 		}
+	}
+
+	internal class WindowExe
+	{
+		public string Exe { get; set; }
+		public string Title { get; set; }
 	}
 }
