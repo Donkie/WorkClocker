@@ -13,10 +13,10 @@ namespace WorkClocker.ViewModel
 		public DispatcherTimer Timer { get; } = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
 		public ObservableCollection<AppGroup> AppTimes { get; } = new ObservableCollection<AppGroup>();
 
-		public TimeSpan IncludedTime => new TimeSpan(0, 0, AppTimes.Sum(o => o.IncludedTime.Seconds));
+		public TimeSpan IncludedTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.IncludedTime.TotalSeconds));
 
-		public TimeSpan ExcludedTime => new TimeSpan(0, 0, AppTimes.Sum(o => o.ExcludedTime.Seconds));
-		public TimeSpan TotalTime => new TimeSpan(0, 0, AppTimes.Sum(o => o.TotalTime.Seconds));
+		public TimeSpan ExcludedTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.ExcludedTime.TotalSeconds));
+		public TimeSpan TotalTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.TotalTime.TotalSeconds));
 
 		public void SetOrAddAppTime(WindowExe app)
 		{

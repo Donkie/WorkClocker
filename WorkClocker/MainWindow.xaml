@@ -8,7 +8,7 @@
         xmlns:properties="clr-namespace:WorkClocker.Properties"
         mc:Ignorable="d"
         Title="{StaticResource AppTitle}" Height="350" Width="800" MinHeight="350" MinWidth="800" d:DataContext="{d:DesignInstance viewModel:ViewModel}">
-	<Window.Resources>
+    <Window.Resources>
         <converters:BooleanColorConverter x:Key="IncludedConverter" True="Green" False="Red"/>
     </Window.Resources>
     <Grid>
@@ -16,23 +16,23 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Button Grid.ColumnSpan="2" x:Name="BtnStart" Content="{x:Static properties:Resources.StartButton}" Padding="15,4" Margin="10" Click="BtnStart_Click"/>
             <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BtnStop" Content="{x:Static properties:Resources.PauseButton}"  Padding="15,4" Margin="10" Click="BtnStop_Click" IsEnabled="False"/>
             <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static properties:Resources.ResetButton}"  Padding="15,4" Margin="10" Click="BtnReset_Click"/>
@@ -47,15 +47,17 @@
             <ListBox.Resources>
                 <DataTemplate DataType="{x:Type viewModel:AppGroup}">
                     <Expander>
-						<Expander.Header>
+                        <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-	                            <CheckBox ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Included}" Margin="5"/>
-								<TextBlock VerticalAlignment="Center" Text="{Binding TotalTime, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="10,5,5,5"/>
-								<TextBlock VerticalAlignment="Center" Text="{Binding IncludedTime, StringFormat=(\{0\}}" Foreground="Green" Margin="5,5,0,5"/>
-								<TextBlock VerticalAlignment="Center" Text="{Binding ExcludedTime, StringFormat=\{0\})}" Foreground="Red" Margin="0,5,10,5"/>
+                                <CheckBox ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Included}" Margin="5"/>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding TotalTime, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="10,5,5,5"/>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding IncludedTime, StringFormat=(\{0\}}" Foreground="Green" Margin="5,5,0,5"/>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding ExcludedTime, StringFormat=\{0\})}" Foreground="Red" Margin="0,5,10,5"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Exe}" FontSize="16" Margin="10,5" TextTrimming="CharacterEllipsis" ToolTip="{Binding Exe}">
-									<TextBlock.Foreground><SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/></TextBlock.Foreground>
-								</TextBlock>
+                                    <TextBlock.Foreground>
+                                        <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
                             </StackPanel>
                         </Expander.Header>
                         <ListView ItemsSource="{Binding Windows}">
@@ -65,11 +67,11 @@
                                         <CheckBox IsChecked="{Binding Included}" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}"/>
                                         <TextBlock Text="{Binding Time, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="5,3"
                                                    VerticalAlignment="Center">
-	                                        <TextBlock.Foreground>
+                                            <TextBlock.Foreground>
                                                 <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
                                             </TextBlock.Foreground>
                                         </TextBlock>
-	                                    <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.Resources>
