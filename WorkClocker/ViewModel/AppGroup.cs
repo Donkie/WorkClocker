@@ -10,11 +10,29 @@ namespace WorkClocker.ViewModel
 	internal class AppGroup : INotifyPropertyChanged
 	{
 		private bool _included = true;
-		public string Exe { get; }
-		public ObservableCollection<TimeSlot> Windows { get; } = new ObservableCollection<TimeSlot>();
-		public TimeSpan TotalTime => new TimeSpan(0, 0, Windows.Sum(o => o.Seconds));
-		public TimeSpan IncludedTime=> _included ? new TimeSpan(0,0, Windows.Where(o => o.Included).Sum(o => o.Seconds)) : new TimeSpan(0);
-		public TimeSpan ExcludedTime => _included ? new TimeSpan(0, 0, Windows.Where(o=>!o.Included).Sum(o => o.Seconds)) : new TimeSpan(0,0, Windows.Sum(o => o.Seconds));
+		public string Exe { get; private set; }
+		public ObservableCollection<TimeSlot> Windows { get; private set; }
+		
+		public TimeSpan TotalTime
+		{
+			get { return new TimeSpan(0, 0, Windows.Sum(o => o.Seconds)); }
+		}
+
+		public TimeSpan IncludedTime
+		{
+			get { return _included ? new TimeSpan(0, 0, Windows.Where(o => o.Included).Sum(o => o.Seconds)) : new TimeSpan(0); }
+		}
+
+		public TimeSpan ExcludedTime
+		{
+			get
+			{
+				return _included
+					? new TimeSpan(0, 0, Windows.Where(o => !o.Included).Sum(o => o.Seconds))
+					: new TimeSpan(0, 0, Windows.Sum(o => o.Seconds));
+			}
+		}
+
 		public bool Included
 		{
 			get { return _included; }
@@ -24,14 +42,15 @@ namespace WorkClocker.ViewModel
 				_included = value;
 				PropChanged();
 
-				PropChanged(nameof(IncludedTime));
-				PropChanged(nameof(ExcludedTime));
+				PropChanged("IncludedTime");
+				PropChanged("ExcludedTime");
 			}
 		}
 
 		public AppGroup(string exe)
 		{
 			Exe = exe;
+			Windows = new ObservableCollection<TimeSlot>();
 		}
 
 		public void IncrementWindow(string title)
@@ -49,16 +68,16 @@ namespace WorkClocker.ViewModel
 				timeSlot.Seconds++;
 			}
 
-			PropChanged(nameof(IncludedTime));
-			PropChanged(nameof(ExcludedTime));
-			PropChanged(nameof(TotalTime));
+			PropChanged("IncludedTime");
+			PropChanged("ExcludedTime");
+			PropChanged("TotalTime");
 		}
 
 		private void TimeSlot_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName != @"Included") return;
-			PropChanged(nameof(IncludedTime));
-			PropChanged(nameof(ExcludedTime));
+			PropChanged("IncludedTime");
+			PropChanged("ExcludedTime");
 		}
 
 		#region INotifyPropertyChanged
@@ -68,7 +87,7 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion

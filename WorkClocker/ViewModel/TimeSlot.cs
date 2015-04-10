@@ -10,7 +10,7 @@ namespace WorkClocker.ViewModel
 		private int _seconds = 1;
 		private bool _included=true;
 
-		public string Title { get; }
+		public string Title { get; private set; }
 		
 		public bool Included
 		{
@@ -35,7 +35,10 @@ namespace WorkClocker.ViewModel
 			}
 		}
 
-		public TimeSpan Time => new TimeSpan(0, 0, Seconds);
+		public TimeSpan Time
+		{
+			get { return new TimeSpan(0, 0, Seconds); }
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,7 +49,7 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
