@@ -10,13 +10,29 @@ namespace WorkClocker.ViewModel
 {
 	internal class ViewModel : INotifyPropertyChanged
 	{
-		public DispatcherTimer Timer { get; } = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
-		public ObservableCollection<AppGroup> AppTimes { get; } = new ObservableCollection<AppGroup>();
+		public ViewModel()
+		{
+			Timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 1) };
+			AppTimes = new ObservableCollection<AppGroup>();
+		}
 
-		public TimeSpan IncludedTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.IncludedTime.TotalSeconds));
+		public DispatcherTimer Timer { get; private set; }
+		public ObservableCollection<AppGroup> AppTimes { get; private set; }
 
-		public TimeSpan ExcludedTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.ExcludedTime.TotalSeconds));
-		public TimeSpan TotalTime => new TimeSpan(0, 0, (int)AppTimes.Sum(o => o.TotalTime.TotalSeconds));
+		public TimeSpan IncludedTime
+		{
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.IncludedTime.TotalSeconds)); }
+		}
+
+		public TimeSpan ExcludedTime
+		{
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.ExcludedTime.TotalSeconds)); }
+		}
+
+		public TimeSpan TotalTime
+		{
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.TotalTime.TotalSeconds)); }
+		}
 
 		public void SetOrAddAppTime(WindowExe app)
 		{
@@ -32,17 +48,17 @@ namespace WorkClocker.ViewModel
 				AppTimes.Add(nts);
 			}
 
-			PropChanged(nameof(IncludedTime));
-			PropChanged(nameof(ExcludedTime));
-			PropChanged(nameof(TotalTime));
+			PropChanged("IncludedTime");
+			PropChanged("ExcludedTime");
+			PropChanged("TotalTime");
 		}
 
 		private void Nts_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName != @"IncludedTime" && e.PropertyName != @"ExcludedTime") return;
 
-			PropChanged(nameof(IncludedTime));
-			PropChanged(nameof(ExcludedTime));
+			PropChanged("IncludedTime");
+			PropChanged("ExcludedTime");
 		}
 
 		#region INotifyPropertyChanged
@@ -52,7 +68,7 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 		#endregion
