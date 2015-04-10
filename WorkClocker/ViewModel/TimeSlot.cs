@@ -31,7 +31,7 @@ namespace WorkClocker.ViewModel
 				if (value == _seconds) return;
 				_seconds = value;
 				PropChanged();
-				PropChanged(nameof(Time));
+				PropChanged("Time");
 			}
 		}
 

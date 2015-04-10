@@ -77,9 +77,9 @@ namespace WorkClocker.ViewModel
 		{
 			AppTimes.Clear();
 			
-			PropChanged(nameof(IncludedTime));
-			PropChanged(nameof(ExcludedTime));
-			PropChanged(nameof(TotalTime));
+			PropChanged("IncludedTime");
+			PropChanged("ExcludedTime");
+			PropChanged("TotalTime");
 		}
 
 		public void Stop()
