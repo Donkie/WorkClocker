@@ -21,30 +21,30 @@ namespace WorkClocker.ViewModel
 
 		public TimeSpan IncludedTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.IncludedTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.IncludedTime.TotalSeconds)); }
 		}
 
 		public TimeSpan ExcludedTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.ExcludedTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.ExcludedTime.TotalSeconds)); }
 		}
 
 		public TimeSpan TotalTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.TotalTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.TotalTime.TotalSeconds)); }
 		}
 
-		public void SetOrAddAppTime(WindowExe app)
+		public void SetOrAddAppTime(WindowExe app, int lastAction, int timeInc = 1)
 		{
-			if (AppTimes.Any(o => o.Exe == app.Exe))
+			if (AppTimes.Any(o => o.App.Exe == app.Exe))
 			{
-				AppTimes.First(o => o.Exe == app.Exe).IncrementWindow(app.Title);
+                AppTimes.First(o => o.App.Exe == app.Exe).IncrementWindow(app.Title, lastAction, timeInc);
 			}
 			else
 			{
-				var nts = new AppGroup(app.Exe);
+				var nts = new AppGroup(app);
 				nts.PropertyChanged += Nts_PropertyChanged;
-				nts.IncrementWindow(app.Title);
+                nts.IncrementWindow(app.Title, lastAction, timeInc);
 				AppTimes.Add(nts);
 			}
 
@@ -60,6 +60,13 @@ namespace WorkClocker.ViewModel
 			PropChanged("IncludedTime");
 			PropChanged("ExcludedTime");
 		}
+
+	    public void UpdateProps()
+	    {
+            PropChanged("IncludedTime");
+            PropChanged("ExcludedTime");
+            PropChanged("TotalTime");
+	    }
 
 		#region INotifyPropertyChanged
 

@@ -76,5 +76,6 @@ namespace WorkClocker
 	{
 		public string Exe { get; set; }
 		public string Title { get; set; }
+        public bool IsAfkExe { get; set; }
 	}
 }

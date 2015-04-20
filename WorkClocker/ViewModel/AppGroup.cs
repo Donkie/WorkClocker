@@ -10,17 +10,17 @@ namespace WorkClocker.ViewModel
 	internal class AppGroup : INotifyPropertyChanged
 	{
 		private bool _included = true;
-		public string Exe { get; private set; }
+		public WindowExe App { get; private set; }
 		public ObservableCollection<TimeSlot> Windows { get; private set; }
 		
 		public TimeSpan TotalTime
 		{
-			get { return new TimeSpan(0, 0, Windows.Sum(o => o.Seconds)); }
+			get { return new TimeSpan(0, 0, Windows.Sum(o => o.TotalSeconds)); }
 		}
 
 		public TimeSpan IncludedTime
 		{
-			get { return _included ? new TimeSpan(0, 0, Windows.Where(o => o.Included).Sum(o => o.Seconds)) : new TimeSpan(0); }
+            get { return _included ? new TimeSpan(0, 0, Windows.Where(o => o.Included).Sum(o => o.TotalSeconds)) : new TimeSpan(0); }
 		}
 
 		public TimeSpan ExcludedTime
@@ -28,8 +28,8 @@ namespace WorkClocker.ViewModel
 			get
 			{
 				return _included
-					? new TimeSpan(0, 0, Windows.Where(o => !o.Included).Sum(o => o.Seconds))
-					: new TimeSpan(0, 0, Windows.Sum(o => o.Seconds));
+                    ? new TimeSpan(0, 0, Windows.Where(o => !o.Included).Sum(o => o.TotalSeconds))
+                    : new TimeSpan(0, 0, Windows.Sum(o => o.TotalSeconds));
 			}
 		}
 
@@ -47,25 +47,33 @@ namespace WorkClocker.ViewModel
 			}
 		}
 
-		public AppGroup(string exe)
+		public AppGroup(WindowExe exe)
 		{
-			Exe = exe;
+			App = exe;
 			Windows = new ObservableCollection<TimeSlot>();
 		}
 
-		public void IncrementWindow(string title)
+		public void IncrementWindow(string title, int lastAction, int timeInc)
 		{
 			if (Windows.All(o => o.Title != title))
 			{
 				var timeSlot = new TimeSlot(title);
 				timeSlot.PropertyChanged += TimeSlot_PropertyChanged;
+			    timeSlot.Seconds = timeInc;
 				Windows.Add(timeSlot);
 				return;
 			}
 
 			foreach (var timeSlot in Windows.Where(timeSlot => timeSlot.Title == title))
 			{
-				timeSlot.Seconds++;
+			    if (lastAction < 1)
+			    {
+                    timeSlot.Seconds += timeInc;
+			        timeSlot.TransferPotentialTime();
+			    }
+			    else
+                    timeSlot.PotentialSeconds += timeInc;
+
 			    break;
 			}
 
@@ -78,7 +86,8 @@ namespace WorkClocker.ViewModel
 		{
 			if (e.PropertyName != @"Included") return;
 			PropChanged("IncludedTime");
-			PropChanged("ExcludedTime");
+            PropChanged("ExcludedTime");
+            PropChanged("TotalTime");
 		}
 
 		#region INotifyPropertyChanged

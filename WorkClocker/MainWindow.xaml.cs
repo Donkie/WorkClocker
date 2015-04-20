@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
+using MouseKeyboardActivityMonitor;
+using MouseKeyboardActivityMonitor.WinApi;
 using WorkClocker.ViewModel;
 
 namespace WorkClocker
@@ -11,22 +15,75 @@ namespace WorkClocker
 	public partial class MainWindow
 	{
 		private readonly ViewModel.ViewModel _viewModel;
+	    private readonly Stopwatch _stopwatch;
+
+// ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        private readonly MouseHookListener _mouseListener;
+// ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+        private readonly KeyboardHookListener _keyboardListener;
+	    private readonly WindowExe _afkExe = new WindowExe {Title = "Away From Keyboard", Exe = "Away From Keyboard", IsAfkExe = true};
+
+	    public const int AFK_TIME = 30;
+
+	    public int LastAction
+	    {
+	        get { return _stopwatch.Elapsed.Seconds; }
+	    }
 
 		public MainWindow()
 		{
-			InitializeComponent();
+		    InitializeComponent();
 			_viewModel = new ViewModel.ViewModel();
 			_viewModel.Timer.Tick += DispatcherTimer_Tick;
 			DataContext = _viewModel;
+
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+
+            _mouseListener = new MouseHookListener(new GlobalHooker()) { Enabled = true };
+            _mouseListener.MouseDownExt += ActionListener;
+            _mouseListener.MouseMove += ActionListener;
+            _mouseListener.MouseWheel += ActionListener;
+
+            _keyboardListener = new KeyboardHookListener(new GlobalHooker()) { Enabled = true };
+            _keyboardListener.KeyDown += ActionListener;
 		}
 
-		private void DispatcherTimer_Tick(object sender, EventArgs e)
-		{
+        private void ActionListener(object sender, object e)
+        {
+            _stopwatch.Restart();
+	    }
+
+	    private bool _hasResetPotentials;
+	    private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (LastAction > AFK_TIME)
+            {
+                if (!_hasResetPotentials)
+                {
+                    _hasResetPotentials = true;
+                    foreach (var window in _viewModel.AppTimes.SelectMany(appGroup => appGroup.Windows))
+                    {
+                        window.PotentialSeconds = 0;
+                    }
+
+                    _viewModel.SetOrAddAppTime(_afkExe, 0, AFK_TIME);
+                }
+                else
+                {
+                    _viewModel.SetOrAddAppTime(_afkExe, 0);
+                }
+
+                _viewModel.UpdateProps();
+                return;
+            }
+	        _hasResetPotentials = false;
+
 			var curApp = Natives.GetFocusWindow();
 
 			if (curApp != null && curApp.Title != null)
 			{
-				_viewModel.SetOrAddAppTime(curApp);
+				_viewModel.SetOrAddAppTime(curApp, LastAction);
 			}
 		}
 

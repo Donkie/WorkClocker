@@ -54,7 +54,7 @@
                                 <TextBlock VerticalAlignment="Center" Text="{Binding TotalTime, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="10,5,5,5"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding IncludedTime, StringFormat=(\{0\}}" Foreground="Green" Margin="5,5,0,5"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding ExcludedTime, StringFormat=\{0\})}" Foreground="Red" Margin="0,5,10,5"/>
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Exe}" FontSize="16" Margin="10,5" TextTrimming="CharacterEllipsis" ToolTip="{Binding Exe}">
+                                <TextBlock VerticalAlignment="Center" Text="{Binding App.Exe}" FontSize="16" Margin="10,5" TextTrimming="CharacterEllipsis" ToolTip="{Binding App}">
                                     <TextBlock.Foreground>
                                         <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
                                     </TextBlock.Foreground>
@@ -70,6 +70,12 @@
                                                    VerticalAlignment="Center">
                                             <TextBlock.Foreground>
                                                 <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding PotentialTime, StringFormat={x:Static properties:Resources.PotentialFormat}}" Margin="5,3"
+                                                   VerticalAlignment="Center">
+                                            <TextBlock.Foreground>
+                                                <SolidColorBrush Color="LightSlateGray"/>
                                             </TextBlock.Foreground>
                                         </TextBlock>
                                         <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>

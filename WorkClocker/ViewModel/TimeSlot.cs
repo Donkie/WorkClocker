@@ -8,6 +8,7 @@ namespace WorkClocker.ViewModel
 	internal class TimeSlot : INotifyPropertyChanged
 	{
 		private int _seconds = 1;
+	    private int _potentialseconds = 0;
 		private bool _included=true;
 
 		public string Title { get; private set; }
@@ -35,10 +36,40 @@ namespace WorkClocker.ViewModel
 			}
 		}
 
+	    public int TotalSeconds
+	    {
+            get { return _potentialseconds + _seconds; }
+	    }
+
+        public int PotentialSeconds
+        {
+            get { return _potentialseconds; }
+            set
+            {
+                if (value == _potentialseconds) return;
+                _potentialseconds = value;
+                PropChanged();
+                PropChanged("Time");
+                PropChanged("PotentialTime");
+                PropChanged("Included");
+            }
+        }
+
+	    public void TransferPotentialTime()
+	    {
+            _seconds += PotentialSeconds;
+            PotentialSeconds = 0;
+	    }
+
 		public TimeSpan Time
 		{
-			get { return new TimeSpan(0, 0, Seconds); }
+            get { return new TimeSpan(0, 0, TotalSeconds); }
 		}
+
+        public TimeSpan PotentialTime
+        {
+            get { return new TimeSpan(0, 0, PotentialSeconds); }
+        }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

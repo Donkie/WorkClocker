@@ -144,4 +144,7 @@
   <data name="WindowFormat" xml:space="preserve">
     <value>Window: {0}</value>
   </data>
+  <data name="PotentialFormat" xml:space="preserve">
+    <value>Potential: {0}</value>
+  </data>
 </root>
