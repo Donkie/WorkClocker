@@ -66,6 +66,7 @@ namespace WorkClocker.ViewModel
 			foreach (var timeSlot in Windows.Where(timeSlot => timeSlot.Title == title))
 			{
 				timeSlot.Seconds++;
+			    break;
 			}
 
 			PropChanged("IncludedTime");

@@ -8,11 +8,14 @@ namespace WorkClocker
 {
 	class Natives
 	{
-		[DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
-		internal static extern int GetWindowText(IntPtr hWnd, [Out] StringBuilder lpString, int nMaxCount);
+		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int GetWindowText(IntPtr hWnd, [Out] StringBuilder lpString, int nMaxCount);
 
-		[DllImport("user32.dll")]
-		static extern uint GetActiveWindow();
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
 
 		[StructLayout(LayoutKind.Sequential)]
 		public struct Rect
@@ -36,12 +39,6 @@ namespace WorkClocker
 			public IntPtr hwndCaret;
 			public Rect rectCaret;
 		}
-
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
-
-		[DllImport("user32.dll")]
-		private static extern IntPtr GetForegroundWindow();
 
 		private static string GetActiveProcessFileName(out IntPtr hwnd)
 		{
