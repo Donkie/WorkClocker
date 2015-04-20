@@ -21,17 +21,17 @@ namespace WorkClocker.ViewModel
 
 		public TimeSpan IncludedTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.IncludedTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.IncludedTime.TotalSeconds)); }
 		}
 
 		public TimeSpan ExcludedTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.ExcludedTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.ExcludedTime.TotalSeconds)); }
 		}
 
 		public TimeSpan TotalTime
 		{
-			get { return new TimeSpan(0, 0, (int) AppTimes.Where(o => !o.App.IsAfkExe).Sum(o => o.TotalTime.TotalSeconds)); }
+			get { return new TimeSpan(0, 0, (int) AppTimes.Sum(o => o.TotalTime.TotalSeconds)); }
 		}
 
 		public void SetOrAddAppTime(WindowExe app, int lastAction, int timeInc = 1)
