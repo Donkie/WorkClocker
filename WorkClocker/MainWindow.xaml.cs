@@ -57,7 +57,7 @@ namespace WorkClocker
 	    private bool _hasResetPotentials;
 	    private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
-            if (LastAction > AFK_TIME)
+            if (LastAction > Properties.Settings.Default.AFKDelay)
             {
                 if (!_hasResetPotentials)
                 {
@@ -67,7 +67,7 @@ namespace WorkClocker
                         window.PotentialSeconds = 0;
                     }
 
-                    _viewModel.SetOrAddAppTime(_afkExe, 0, AFK_TIME);
+                    _viewModel.SetOrAddAppTime(_afkExe, 0, Properties.Settings.Default.AFKDelay + 1);
                 }
                 else
                 {
@@ -106,5 +106,11 @@ namespace WorkClocker
 			BtnStop_Click(sender, e);
 			_viewModel.Reset();
 		}
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new SettingsWindow();
+            window.Show();
+        }
 	}
 }

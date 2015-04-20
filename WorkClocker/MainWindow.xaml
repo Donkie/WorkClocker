@@ -42,10 +42,19 @@
             <Label Grid.Row="4" Grid.Column="1" Content="{Binding ExcludedTime}"  Padding="15,4" Margin="5,10,10,10" Foreground="Red"/>
             <Label Grid.Row="5" Grid.Column="0" Content="{x:Static properties:Resources.WorkedTimeLabel}" Margin="10,10,5,10" Foreground="Green"/>
             <Label Grid.Row="5" Grid.Column="1" Content="{Binding IncludedTime}"  Padding="15,4" Margin="5,10,10,10" Foreground="Green"/>
+            <Button x:Name="SettingsButton" Margin="10,47,67,-27" Grid.Row="5" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SettingsButton_Click">
+                <StackPanel Orientation="Horizontal" Margin="1">
+                    <Image Source="Resources/wrench.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                </StackPanel>
+            </Button>
         </Grid>
-		<ListView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding AppTimes}">
-			<ListView.ItemContainerStyle><Style TargetType="ListViewItem"><Setter Property="HorizontalContentAlignment" Value="Stretch"/></Style></ListView.ItemContainerStyle>
-			<ListView.Resources>
+        <ListView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding AppTimes}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.Resources>
                 <DataTemplate DataType="{x:Type viewModel:AppGroup}">
                     <Expander>
                         <Expander.Header>
