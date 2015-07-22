@@ -9,5 +9,6 @@
         </Grid.ColumnDefinitions>
         <Label Content="AFK Delay" Margin="10,10,10,0" VerticalAlignment="Top"/>
         <TextBox Grid.Column="1" Height="23" Margin="10,14,10,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Source={StaticResource Settings}, Path=Default.AFKDelay}"/>
+        <Button x:Name="button" Grid.ColumnSpan="2" Content="Save" Margin="59,0,58,10" Height="20" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
