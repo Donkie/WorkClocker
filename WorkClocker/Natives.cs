@@ -51,24 +51,36 @@ namespace WorkClocker
 
 		public static WindowExe GetFocusWindow()
 		{
-			try
-			{
-				var sb = new StringBuilder(256);
-				IntPtr hwnd;
-				var str = GetActiveProcessFileName(out hwnd);
-				GetWindowText(hwnd, sb, 256);
-				var f = new FileInfo(str);
-				return new WindowExe { Title = sb.ToString(), Exe = f.Name.Remove(f.Name.Length-f.Extension.Length,f.Extension.Length)};
-			}
-			catch (AccessViolationException e)
-			{
-				Console.WriteLine(e.ToString());
-			}
+		    try
+		    {
+		        var sb = new StringBuilder(256);
+		        IntPtr hwnd;
+		        var str = GetActiveProcessFileName(out hwnd);
+		        GetWindowText(hwnd, sb, 256);
+		        var f = new FileInfo(str);
+		        return new WindowExe
+		        {
+		            Title = sb.ToString(),
+		            Exe = f.Name.Remove(f.Name.Length - f.Extension.Length, f.Extension.Length)
+		        };
+		    }
+		    catch (AccessViolationException e)
+		    {
+		        Console.WriteLine(e.ToString());
+		    }
+		    catch (System.ComponentModel.Win32Exception e)
+		    {
+                if(e.NativeErrorCode == 299)
+                    return new WindowExe { Title = "64-bit Application", Exe = "64-bit App" };
+                Console.WriteLine(e.NativeErrorCode);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.ToString());
+            }
 			catch (Exception e)
 			{
 				Console.WriteLine(e.ToString());
 			}
-			return null;
+			return new WindowExe { Title = "Unknown", Exe = "Unknown" };
 		}
 	}
 

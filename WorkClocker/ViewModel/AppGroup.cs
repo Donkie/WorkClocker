@@ -11,7 +11,7 @@ namespace WorkClocker.ViewModel
 	{
 		private bool _included = true;
 		public WindowExe App { get; private set; }
-		public ObservableCollection<TimeSlot> Windows { get; private set; }
+		public ObservableCollection<TimeSlot> Windows { get; }
 		
 		public TimeSpan TotalTime
 		{
@@ -97,10 +97,10 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		#endregion
+	    #endregion
 
 	}
 }

@@ -16,8 +16,8 @@ namespace WorkClocker.ViewModel
 			AppTimes = new ObservableCollection<AppGroup>();
 		}
 
-		public DispatcherTimer Timer { get; private set; }
-		public ObservableCollection<AppGroup> AppTimes { get; private set; }
+		public DispatcherTimer Timer { get; }
+		public ObservableCollection<AppGroup> AppTimes { get; }
 
 		public TimeSpan IncludedTime
 		{
@@ -75,10 +75,10 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		#endregion
+	    #endregion
 
 		public void Reset()
 		{

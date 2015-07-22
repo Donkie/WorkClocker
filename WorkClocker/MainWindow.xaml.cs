@@ -25,12 +25,9 @@ namespace WorkClocker
 
 	    public const int AFK_TIME = 30;
 
-	    public int LastAction
-	    {
-	        get { return _stopwatch.Elapsed.Seconds; }
-	    }
+	    public int LastAction => _stopwatch.Elapsed.Seconds;
 
-		public MainWindow()
+	    public MainWindow()
 		{
 		    InitializeComponent();
 			_viewModel = new ViewModel.ViewModel();
@@ -81,7 +78,7 @@ namespace WorkClocker
 
 			var curApp = Natives.GetFocusWindow();
 
-			if (curApp != null && curApp.Title != null)
+			if (curApp?.Title != null)
 			{
 				_viewModel.SetOrAddAppTime(curApp, LastAction);
 			}
