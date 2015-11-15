@@ -159,6 +159,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\clock_pause.png" />
+    <Resource Include="Resources\clock_delete.png" />
+    <Resource Include="Resources\clock_play.png" />
+    <Resource Include="Resources\folder.png" />
     <Resource Include="Resources\disk.png" />
     <Content Include="References\MouseKeyboardActivityMonitor.dll" />
     <Resource Include="Resources\wrench.png" />

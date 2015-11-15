@@ -17,10 +17,47 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid>
+        <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <ToolBar x:Name="toolBar" Band="-1">
+                <Button x:Name="StartButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="StartButton_Click" ToolTip="{x:Static properties:Resources.StartButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/clock_play.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="PauseButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="PauseButton_Click" ToolTip="{x:Static properties:Resources.PauseButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/clock_pause.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="ResetButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="ResetButton_Click" ToolTip="{x:Static properties:Resources.ResetButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/clock_delete.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Button x:Name="SaveButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SaveButton_Click" ToolTip="{x:Static properties:Resources.SaveButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/disk.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="LoadButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="LoadButton_Click" ToolTip="{x:Static properties:Resources.LoadButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/folder.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+                <Separator />
+                <Button x:Name="SettingsButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SettingsButton_Click" ToolTip="{x:Static properties:Resources.SettingsButton}">
+                    <StackPanel Orientation="Horizontal" Margin="1">
+                        <Image Source="Resources/wrench.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -33,27 +70,14 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.ColumnSpan="2" x:Name="BtnStart" Content="{x:Static properties:Resources.StartButton}" Padding="15,4" Margin="10" Click="BtnStart_Click"/>
-            <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="BtnStop" Content="{x:Static properties:Resources.PauseButton}"  Padding="15,4" Margin="10" Click="BtnStop_Click" IsEnabled="False"/>
-            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static properties:Resources.ResetButton}"  Padding="15,4" Margin="10" Click="BtnReset_Click"/>
             <Label Grid.Row="3" Grid.Column="0" Content="{x:Static properties:Resources.TotalTimeLabel}" Margin="10,10,5,10"/>
             <Label Grid.Row="3" Grid.Column="1" Content="{Binding TotalTime}"  Padding="15,4" Margin="5,10,10,10"/>
             <Label Grid.Row="4" Grid.Column="0" Content="{x:Static properties:Resources.ExcludedTimeLabel}" Margin="10,10,5,10" Foreground="Red"/>
             <Label Grid.Row="4" Grid.Column="1" Content="{Binding ExcludedTime}"  Padding="15,4" Margin="5,10,10,10" Foreground="Red"/>
             <Label Grid.Row="5" Grid.Column="0" Content="{x:Static properties:Resources.WorkedTimeLabel}" Margin="10,10,5,10" Foreground="Green"/>
             <Label Grid.Row="5" Grid.Column="1" Content="{Binding IncludedTime}"  Padding="15,4" Margin="5,10,10,10" Foreground="Green"/>
-            <Button x:Name="SettingsButton" Margin="10,47,67,-27" Grid.Row="5" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SettingsButton_Click">
-                <StackPanel Orientation="Horizontal" Margin="1">
-                    <Image Source="Resources/wrench.png" Width="16" Height="16" Margin="1,0,0,0"/>
-                </StackPanel>
-            </Button>
-            <Button x:Name="SaveButton" Margin="38,47,39,-27" Grid.Row="5" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SaveButton_Click">
-                <StackPanel Orientation="Horizontal" Margin="1">
-                    <Image Source="Resources/disk.png" Width="16" Height="16" Margin="1,0,0,0"/>
-                </StackPanel>
-            </Button>
         </Grid>
-        <ListView Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding AppTimes}">
+        <ListView Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Margin="10" ItemsSource="{Binding AppTimes}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

@@ -86,23 +86,23 @@ namespace WorkClocker
 			}
 		}
 
-		private void BtnStart_Click(object sender, RoutedEventArgs e)
+		private void StartButton_Click(object sender, RoutedEventArgs e)
 		{
 			_viewModel.Start();
-			BtnStart.IsEnabled = false;
-			BtnStop.IsEnabled = true;
+			StartButton.IsEnabled = false;
+			PauseButton.IsEnabled = true;
 		}
 
-		private void BtnStop_Click(object sender, RoutedEventArgs e)
+		private void PauseButton_Click(object sender, RoutedEventArgs e)
 		{
 			_viewModel.Stop();
-			BtnStart.IsEnabled = true;
-			BtnStop.IsEnabled = false;
+            StartButton.IsEnabled = true;
+            PauseButton.IsEnabled = false;
 		}
 
-		private void BtnReset_Click(object sender, RoutedEventArgs e)
+		private void ResetButton_Click(object sender, RoutedEventArgs e)
 		{
-			BtnStop_Click(sender, e);
+			PauseButton_Click(sender, e);
 			_viewModel.Reset();
 		}
 
