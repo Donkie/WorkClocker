@@ -71,7 +71,7 @@ namespace WorkClocker.ViewModel
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)
 		{
-			if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
