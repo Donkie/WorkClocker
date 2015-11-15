@@ -81,12 +81,6 @@
                                                 <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
                                             </TextBlock.Foreground>
                                         </TextBlock>
-                                        <TextBlock Text="{Binding PotentialTime, StringFormat={x:Static properties:Resources.PotentialFormat}}" Margin="5,3"
-                                                   VerticalAlignment="Center">
-                                            <TextBlock.Foreground>
-                                                <SolidColorBrush Color="LightSlateGray"/>
-                                            </TextBlock.Foreground>
-                                        </TextBlock>
                                         <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
