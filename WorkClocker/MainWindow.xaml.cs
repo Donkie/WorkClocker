@@ -121,5 +121,11 @@ namespace WorkClocker
         {
             _viewModel.SaveToDisk();
         }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Reset();
+            _viewModel.LoadFromDisk();
+        }
     }
 }

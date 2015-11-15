@@ -88,7 +88,7 @@ namespace WorkClocker.ViewModel
 			PropChanged("TotalTime");
 		}
 
-		private void TimeSlot_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		public void TimeSlot_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName != @"Included") return;
 			PropChanged("IncludedTime");

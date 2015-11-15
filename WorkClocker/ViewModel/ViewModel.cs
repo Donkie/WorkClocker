@@ -107,9 +107,24 @@ namespace WorkClocker.ViewModel
             var serializer = new XmlSerializer(typeof(ObservableCollection<AppGroup>));
             using (var reader = new StreamReader(_filePath))
             {
-                AppTimes = (ObservableCollection<AppGroup>) serializer.Deserialize(reader);
+
+                AppTimes.Clear();
+                foreach (var app in (ObservableCollection<AppGroup>)serializer.Deserialize(reader))
+                    AppTimes.Add(app);
+
                 reader.Close();
             }
+
+            foreach (var app in AppTimes)
+            {
+                app.PropertyChanged += Nts_PropertyChanged;
+                foreach (var timeslot in app.Windows)
+                {
+                    timeslot.PropertyChanged += app.TimeSlot_PropertyChanged;
+                }
+            }
+
+            UpdateProps();
         }
 
         public void SaveToDisk()
