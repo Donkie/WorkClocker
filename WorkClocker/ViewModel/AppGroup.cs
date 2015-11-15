@@ -7,10 +7,11 @@ using WorkClocker.Annotations;
 
 namespace WorkClocker.ViewModel
 {
-	internal class AppGroup : INotifyPropertyChanged
+    [Serializable]
+    public class AppGroup : INotifyPropertyChanged
 	{
 		private bool _included = true;
-		public WindowExe App { get; private set; }
+		public WindowExe App { get; set; }
 		public ObservableCollection<TimeSlot> Windows { get; }
 		
 		public TimeSpan TotalTime
@@ -46,6 +47,11 @@ namespace WorkClocker.ViewModel
 				PropChanged("ExcludedTime");
 			}
 		}
+
+        public AppGroup()
+        {
+            Windows = new ObservableCollection<TimeSlot>();
+        }
 
 		public AppGroup(WindowExe exe)
 		{
@@ -90,9 +96,9 @@ namespace WorkClocker.ViewModel
             PropChanged("TotalTime");
 		}
 
-		#region INotifyPropertyChanged
-
-		public event PropertyChangedEventHandler PropertyChanged;
+        #region INotifyPropertyChanged
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
 
 		[NotifyPropertyChangedInvocator]
 		protected virtual void PropChanged([CallerMemberName] string propertyName = null)

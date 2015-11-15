@@ -44,6 +44,8 @@ namespace WorkClocker
 
             _keyboardListener = new KeyboardHookListener(new GlobalHooker()) { Enabled = true };
             _keyboardListener.KeyDown += ActionListener;
+
+            _viewModel.LoadFromDisk();
 		}
 
         private void ActionListener(object sender, object e)
@@ -109,5 +111,15 @@ namespace WorkClocker
             var window = new SettingsWindow();
             window.Show();
         }
-	}
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveToDisk();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _viewModel.SaveToDisk();
+        }
+    }
 }

@@ -84,7 +84,8 @@ namespace WorkClocker
 		}
 	}
 
-	internal class WindowExe
+    [Serializable]
+	public class WindowExe
 	{
 		public string Exe { get; set; }
 		public string Title { get; set; }

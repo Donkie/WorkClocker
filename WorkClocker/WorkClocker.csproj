@@ -159,6 +159,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\disk.png" />
     <Content Include="References\MouseKeyboardActivityMonitor.dll" />
     <Resource Include="Resources\wrench.png" />
     <Resource Include="Resources\clock.png" />

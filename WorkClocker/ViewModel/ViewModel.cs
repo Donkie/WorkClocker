@@ -1,14 +1,16 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
+using System.Xml.Serialization;
 using WorkClocker.Annotations;
 
 namespace WorkClocker.ViewModel
 {
-	internal class ViewModel : INotifyPropertyChanged
+    internal class ViewModel : INotifyPropertyChanged
 	{
 		public ViewModel()
 		{
@@ -17,7 +19,7 @@ namespace WorkClocker.ViewModel
 		}
 
 		public DispatcherTimer Timer { get; }
-		public ObservableCollection<AppGroup> AppTimes { get; }
+		public ObservableCollection<AppGroup> AppTimes { get; private set; }
 
 		public TimeSpan IncludedTime
 		{
@@ -42,8 +44,8 @@ namespace WorkClocker.ViewModel
 			}
 			else
 			{
-				var nts = new AppGroup(app);
-				nts.PropertyChanged += Nts_PropertyChanged;
+			    var nts = new AppGroup(app);
+			    nts.PropertyChanged += Nts_PropertyChanged;
                 nts.IncrementWindow(app.Title, lastAction, timeInc);
 				AppTimes.Add(nts);
 			}
@@ -98,5 +100,23 @@ namespace WorkClocker.ViewModel
 		{
 			Timer.Start();
 		}
-	}
+
+        private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkClocker.xml");
+        public void LoadFromDisk()
+        {
+            var serializer = new XmlSerializer(typeof(ObservableCollection<AppGroup>));
+            using (var reader = new StreamReader(_filePath))
+            {
+                AppTimes = (ObservableCollection<AppGroup>) serializer.Deserialize(reader);
+                reader.Close();
+            }
+        }
+
+        public void SaveToDisk()
+        {
+            var serializer = new XmlSerializer(typeof(ObservableCollection<AppGroup>));
+            using (var writer = new StreamWriter(_filePath))
+                serializer.Serialize(writer, AppTimes);
+        }
+    }
 }

@@ -1,17 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 using WorkClocker.Annotations;
 
 namespace WorkClocker.ViewModel
 {
-	internal class TimeSlot : INotifyPropertyChanged
+    [Serializable]
+    public class TimeSlot : INotifyPropertyChanged
 	{
 		private int _seconds = 1;
-	    private int _potentialseconds;
+        private int _potentialseconds;
 		private bool _included=true;
 
-		public string Title { get; private set; }
+		public string Title { get; set; }
 		
 		public bool Included
 		{
@@ -38,7 +40,8 @@ namespace WorkClocker.ViewModel
 
 	    public int TotalSeconds => _potentialseconds + _seconds;
 
-	    public int PotentialSeconds
+        [XmlIgnore]
+        public int PotentialSeconds
         {
             get { return _potentialseconds; }
             set
@@ -62,7 +65,13 @@ namespace WorkClocker.ViewModel
 
 	    public TimeSpan PotentialTime => new TimeSpan(0, 0, PotentialSeconds);
 
-	    public event PropertyChangedEventHandler PropertyChanged;
+        [field: NonSerialized]
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public TimeSlot()
+        {
+        }
 
 		public TimeSlot(string title)
 		{
