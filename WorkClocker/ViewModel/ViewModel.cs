@@ -104,6 +104,9 @@ namespace WorkClocker.ViewModel
         private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkClocker.xml");
         public void LoadFromDisk()
         {
+            if (!File.Exists(_filePath))
+                return;
+
             var serializer = new XmlSerializer(typeof(ObservableCollection<AppGroup>));
             using (var reader = new StreamReader(_filePath))
             {
