@@ -21,37 +21,43 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel x:Name="toolBar" Orientation="Horizontal" Margin="5,0,0,0">
+        <StackPanel x:Name="toolBar" Orientation="Horizontal" Margin="5,0,0,0" Grid.ColumnSpan="2" >
             <Button x:Name="StartButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="StartButton_Click" ToolTip="{x:Static properties:Resources.StartButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/clock_play.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Start"/>
                 </StackPanel>
             </Button>
             <Button x:Name="PauseButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="PauseButton_Click" ToolTip="{x:Static properties:Resources.PauseButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/clock_pause.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Pause"/>
                 </StackPanel>
             </Button>
             <Button x:Name="ResetButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="ResetButton_Click" ToolTip="{x:Static properties:Resources.ResetButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/clock_delete.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Reset"/>
                 </StackPanel>
             </Button>
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
             <Button x:Name="SaveButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SaveButton_Click" ToolTip="{x:Static properties:Resources.SaveButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/disk.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Save"/>
                 </StackPanel>
             </Button>
             <Button x:Name="LoadButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="LoadButton_Click" ToolTip="{x:Static properties:Resources.LoadButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/folder.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Load"/>
                 </StackPanel>
             </Button>
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
             <Button x:Name="SettingsButton" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" Click="SettingsButton_Click" ToolTip="{x:Static properties:Resources.SettingsButton}">
                 <StackPanel Orientation="Horizontal" Margin="1">
                     <Image Source="Resources/wrench.png" Width="16" Height="16" Margin="1,0,0,0"/>
+                    <Label Content="Settings"/>
                 </StackPanel>
             </Button>
         </StackPanel>
