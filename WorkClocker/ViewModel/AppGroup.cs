@@ -4,15 +4,16 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using WorkClocker.Annotations;
+using WorkClocker.Helpers;
 
 namespace WorkClocker.ViewModel
 {
     [Serializable]
-    public class AppGroup : INotifyPropertyChanged
+    public class AppGroup : INotifyPropertyChanged, IComparable
 	{
 		private bool _included = true;
 		public WindowExe App { get; set; }
-		public ObservableCollection<TimeSlot> Windows { get; }
+		public ObservableCollection<TimeSlot> Windows { get; private set; }
 		
 		public TimeSpan TotalTime
 		{
@@ -58,16 +59,18 @@ namespace WorkClocker.ViewModel
 			App = exe;
 			Windows = new ObservableCollection<TimeSlot>();
 		}
-
+        
 		public void IncrementWindow(string title, int lastAction, int timeInc)
 		{
+            //Couldn't find any existing title
 			if (Windows.All(o => o.Title != title))
 			{
 				var timeSlot = new TimeSlot(title);
 				timeSlot.PropertyChanged += TimeSlot_PropertyChanged;
 			    timeSlot.Seconds = timeInc;
 				Windows.Add(timeSlot);
-				return;
+                Windows.BubbleSort();
+                return;
 			}
 
 			foreach (var timeSlot in Windows.Where(timeSlot => timeSlot.Title == title))
@@ -83,7 +86,9 @@ namespace WorkClocker.ViewModel
 			    break;
 			}
 
-			PropChanged("IncludedTime");
+            Windows.BubbleSort();
+
+            PropChanged("IncludedTime");
 			PropChanged("ExcludedTime");
 			PropChanged("TotalTime");
 		}
@@ -108,5 +113,14 @@ namespace WorkClocker.ViewModel
 
 	    #endregion
 
+        public int CompareTo(object obj)
+        {
+            var t = obj as AppGroup;
+            if (t == null)
+                throw new ArgumentException("Object is not a AppGroup");
+
+            //We're basically using TotalTime here but skipping having to create a TimeSpan for each compare
+            return t.Windows.Sum(o => o.TotalSeconds).CompareTo(Windows.Sum(o => o.TotalSeconds));
+        }
 	}
 }

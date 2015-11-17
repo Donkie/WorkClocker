@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using System.Xml.Serialization;
 using WorkClocker.Annotations;
+using WorkClocker.Helpers;
 
 namespace WorkClocker.ViewModel
 {
@@ -40,7 +41,8 @@ namespace WorkClocker.ViewModel
 		{
 			if (AppTimes.Any(o => o.App.Exe == app.Exe))
 			{
-                AppTimes.First(o => o.App.Exe == app.Exe).IncrementWindow(app.Title, lastAction, timeInc);
+			    AppTimes.First(o => o.App.Exe == app.Exe).IncrementWindow(app.Title, lastAction, timeInc);
+                AppTimes.BubbleSort();
 			}
 			else
 			{

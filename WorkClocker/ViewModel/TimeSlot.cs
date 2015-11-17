@@ -7,7 +7,7 @@ using WorkClocker.Annotations;
 namespace WorkClocker.ViewModel
 {
     [Serializable]
-    public class TimeSlot : INotifyPropertyChanged
+    public class TimeSlot : INotifyPropertyChanged, IComparable
 	{
 		private int _seconds = 1;
         private int _potentialseconds;
@@ -82,5 +82,14 @@ namespace WorkClocker.ViewModel
 		{
 		    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+        public int CompareTo(object obj)
+        {
+            var t = obj as TimeSlot;
+            if(t == null)
+                throw new ArgumentException("Object is not a TimeSlot");
+
+            return t.TotalSeconds.CompareTo(TotalSeconds);
+        }
 	}
 }
