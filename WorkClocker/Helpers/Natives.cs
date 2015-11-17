@@ -6,7 +6,7 @@ using System.Text;
 
 namespace WorkClocker
 {
-	class Natives
+    internal class Natives
 	{
 		[DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetWindowText(IntPtr hWnd, [Out] StringBuilder lpString, int nMaxCount);

@@ -110,15 +110,15 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AppGroup.cs" />
-    <Compile Include="ViewModel\Converters\BooleanColorConverter.cs" />
-    <Compile Include="ViewModel\Converters\BooleanConverter.cs" />
+    <Compile Include="Helpers\Converters\BooleanColorConverter.cs" />
+    <Compile Include="Helpers\Converters\BooleanConverter.cs" />
     <Compile Include="ViewModel\TimeSlot.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Natives.cs" />
+    <Compile Include="Helpers\Natives.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
