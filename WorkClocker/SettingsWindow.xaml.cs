@@ -23,5 +23,12 @@ namespace WorkClocker
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Set the minimum height to the automatic scaled height
+            MinHeight = ActualHeight;
+            MaxHeight = MinHeight;
+        }
     }
 }
