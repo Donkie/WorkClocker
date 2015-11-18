@@ -42,7 +42,8 @@ namespace WorkClocker.ViewModel
 			if (AppTimes.Any(o => o.App.Exe == app.Exe))
 			{
 			    AppTimes.First(o => o.App.Exe == app.Exe).IncrementWindow(app.Title, lastAction, timeInc);
-                AppTimes.BubbleSort();
+                if (Properties.Settings.Default.Autosort)
+                    AppTimes.BubbleSort();
 			}
 			else
 			{

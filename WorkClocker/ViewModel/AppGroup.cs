@@ -69,7 +69,9 @@ namespace WorkClocker.ViewModel
 				timeSlot.PropertyChanged += TimeSlot_PropertyChanged;
 			    timeSlot.Seconds = timeInc;
 				Windows.Add(timeSlot);
-                Windows.BubbleSort();
+
+                if (Properties.Settings.Default.Autosort)
+                    Windows.BubbleSort();
                 return;
 			}
 
@@ -86,7 +88,8 @@ namespace WorkClocker.ViewModel
 			    break;
 			}
 
-            Windows.BubbleSort();
+            if(Properties.Settings.Default.Autosort)
+                Windows.BubbleSort();
 
             PropChanged("IncludedTime");
 			PropChanged("ExcludedTime");
