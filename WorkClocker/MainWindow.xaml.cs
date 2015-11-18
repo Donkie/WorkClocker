@@ -21,8 +21,6 @@ namespace WorkClocker
         private readonly KeyboardHookListener _keyboardListener;
 	    private readonly WindowExe _afkExe = new WindowExe {Title = "Away From Keyboard", Exe = "Away From Keyboard", IsAfkExe = true};
 
-	    public const int AFK_TIME = 30;
-
 	    public int LastAction => _stopwatch.Elapsed.Seconds;
 
 	    public MainWindow()

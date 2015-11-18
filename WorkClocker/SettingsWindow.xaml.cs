@@ -30,5 +30,10 @@ namespace WorkClocker
             MinHeight = ActualHeight;
             MaxHeight = MinHeight;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
