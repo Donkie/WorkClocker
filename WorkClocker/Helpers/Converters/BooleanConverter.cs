@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace WorkClocker.ViewModel.Converters
+namespace WorkClocker.Helpers.Converters
 {
 	public class BooleanConverter<T> : IValueConverter
 	{

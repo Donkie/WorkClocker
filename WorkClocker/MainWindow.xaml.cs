@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using MouseKeyboardActivityMonitor;
 using MouseKeyboardActivityMonitor.WinApi;
+using WorkClocker.Helpers;
 
 namespace WorkClocker
 {

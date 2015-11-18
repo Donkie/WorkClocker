@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:WorkClocker.ViewModel"
-        xmlns:converters="clr-namespace:WorkClocker.ViewModel.Converters"
         xmlns:properties="clr-namespace:WorkClocker.Properties"
+        xmlns:converters="clr-namespace:WorkClocker.Helpers.Converters"
         mc:Ignorable="d"
         Title="{StaticResource AppTitle}" Height="350" Width="800" MinHeight="350" MinWidth="800" d:DataContext="{d:DesignInstance viewModel:ViewModel}" Icon="Resources/clock.png" Closing="Window_Closing">
     <Window.Resources>
