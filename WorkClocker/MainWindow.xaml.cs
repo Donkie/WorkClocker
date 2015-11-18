@@ -77,9 +77,10 @@ namespace WorkClocker
 
 			var curApp = Natives.GetFocusWindow();
 
-			if (curApp?.Title != null)
-			{
-				_viewModel.SetOrAddAppTime(curApp, LastAction);
+            if (curApp?.Title != null)
+            {
+                TitleManipulator.CleanTitle(ref curApp);
+                _viewModel.SetOrAddAppTime(curApp, LastAction);
 			}
 		}
 

@@ -113,6 +113,7 @@
     <Compile Include="Helpers\Converters\BooleanColorConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanConverter.cs" />
     <Compile Include="ViewModel\TimeSlot.cs" />
+    <Compile Include="Helpers\TitleManipulator.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
