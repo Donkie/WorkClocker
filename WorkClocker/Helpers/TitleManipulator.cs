@@ -15,7 +15,7 @@ namespace WorkClocker.Helpers
         private static readonly Dictionary<string, Func<string, string>> TitleDictionary = new Dictionary
             <string, Func<string, string>>()
         {
-            {"chrome", title => title.Substring(0, title.Length - 16)}
+            {"chrome", title => title.Length > 16 ? title.Substring(0, title.Length - 16) : title}
         };
 
         private static void CleanExe(ref WindowExe e)
