@@ -83,12 +83,4 @@ namespace WorkClocker.Helpers
 			return new WindowExe { Title = "Unknown", Exe = "Unknown" };
 		}
 	}
-
-    [Serializable]
-	public class WindowExe
-	{
-		public string Exe { get; set; }
-		public string Title { get; set; }
-        public bool IsAfkExe { get; set; }
-	}
 }

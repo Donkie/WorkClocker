@@ -47,6 +47,8 @@ namespace WorkClocker.ViewModel
 			}
 			else
 			{
+                app.LoadIcon();
+
 			    var nts = new AppGroup(app);
 			    nts.PropertyChanged += Nts_PropertyChanged;
                 nts.IncrementWindow(app.Title, lastAction, timeInc);
@@ -123,6 +125,7 @@ namespace WorkClocker.ViewModel
 
             foreach (var app in AppTimes)
             {
+                app.App.LoadIcon();
                 app.PropertyChanged += Nts_PropertyChanged;
                 foreach (var timeslot in app.Windows)
                 {

@@ -105,6 +105,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\ListExtension.cs" />
+    <Compile Include="Helpers\WindowExe.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
@@ -161,6 +162,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\application.ico" />
     <Resource Include="Resources\clock_pause.png" />
     <Resource Include="Resources\clock_delete.png" />
     <Resource Include="Resources\clock_play.png" />

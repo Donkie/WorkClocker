@@ -96,6 +96,7 @@
                                 <TextBlock VerticalAlignment="Center" Text="{Binding TotalTime, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="10,5,5,5"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding IncludedTime, StringFormat=(\{0\}}" Foreground="Green" Margin="5,5,0,5"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding ExcludedTime, StringFormat=\{0\})}" Foreground="Red" Margin="0,5,10,5"/>
+                                <Image Source="{Binding App.Icon}" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <TextBlock VerticalAlignment="Center" Text="{Binding App.Exe}" FontSize="16" Margin="10,5" TextTrimming="CharacterEllipsis" ToolTip="{Binding App}">
                                     <TextBlock.Foreground>
                                         <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>

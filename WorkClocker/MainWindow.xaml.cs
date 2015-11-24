@@ -27,6 +27,9 @@ namespace WorkClocker
 	    public MainWindow()
 		{
 		    InitializeComponent();
+
+	        WindowExe.SetDefaultIcon(Properties.Resources.application);
+
 			_viewModel = new ViewModel.ViewModel();
 			_viewModel.Timer.Tick += DispatcherTimer_Tick;
 			DataContext = _viewModel;
