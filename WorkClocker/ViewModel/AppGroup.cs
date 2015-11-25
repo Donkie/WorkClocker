@@ -30,6 +30,7 @@ namespace WorkClocker.ViewModel
             {
                 _filter = value;
                 OnFilterChanged();
+                PropChanged("FilterIncluded");
             }
         }
 
@@ -62,10 +63,10 @@ namespace WorkClocker.ViewModel
         {
             get
             {
-                var i = Windows.Count(v => v.Included);
+                var i = AllWindows.Cast<TimeSlot>().Count(v => v.Included);
                 if (i == 0)
                     return false;
-                if (i == Windows.Count)
+                if (i == AllWindows.Cast<TimeSlot>().Count())
                     return true;
 
                 return null;
