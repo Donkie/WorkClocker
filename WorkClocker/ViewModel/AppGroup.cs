@@ -113,7 +113,7 @@ namespace WorkClocker.ViewModel
             }
             else
             {
-                e.Accepted = tsvm.Title.Contains(Filter);
+                e.Accepted = tsvm.Title.ToLower().Contains(Filter.ToLower());
             }
         }
 
