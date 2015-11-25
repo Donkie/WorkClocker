@@ -240,7 +240,7 @@ namespace WorkClocker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Window: {0}.
+        ///   Looks up a localized string similar to {0}.
         /// </summary>
         public static string WindowFormat {
             get {
