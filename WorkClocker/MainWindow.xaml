@@ -104,22 +104,25 @@
                                 </TextBlock>
                             </StackPanel>
                         </Expander.Header>
-                        <ListView ItemsSource="{Binding Windows}" MaxHeight="300">
-                            <ListView.Resources>
-                                <DataTemplate DataType="{x:Type viewModel:TimeSlot}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{Binding Included}" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}"/>
-                                        <TextBlock Text="{Binding Time, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="5,3"
-                                                   VerticalAlignment="Center">
-                                            <TextBlock.Foreground>
-                                                <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
-                                            </TextBlock.Foreground>
-                                        </TextBlock>
-                                        <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.Resources>
-                        </ListView>
+                        <DockPanel>
+                            <TextBox Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding AllWindows}" MaxHeight="300">
+                                <ListView.Resources>
+                                    <DataTemplate DataType="{x:Type viewModel:TimeSlot}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox IsChecked="{Binding Included}" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}"/>
+                                            <TextBlock Text="{Binding Time, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="5,3"
+                                                       VerticalAlignment="Center">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{Binding Included, Converter={StaticResource IncludedConverter}}"/>
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Title, StringFormat={x:Static properties:Resources.WindowFormat}}" Margin="5,3" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListView.Resources>
+                            </ListView>
+                        </DockPanel>
                     </Expander>
                 </DataTemplate>
             </ListView.Resources>

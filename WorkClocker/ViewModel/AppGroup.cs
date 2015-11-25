@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
+using System.Xml.Serialization;
 using WorkClocker.Annotations;
 using WorkClocker.Helpers;
 
@@ -13,9 +15,29 @@ namespace WorkClocker.ViewModel
 	{
 		private bool _included = true;
 		public WindowExe App { get; set; }
-		public ObservableCollection<TimeSlot> Windows { get; private set; }
-		
-		public TimeSpan TotalTime
+		public ObservableCollection<TimeSlot> Windows { get; set; }
+        [XmlIgnore]
+        public CollectionViewSource CvsWindows { get; set; }
+        [XmlIgnore]
+        public ICollectionView AllWindows => CvsWindows.View;
+
+        private string _filter;
+        public string Filter
+        {
+            get { return _filter; }
+            set
+            {
+                _filter = value;
+                OnFilterChanged();
+            }
+        }
+
+        private void OnFilterChanged()
+        {
+            CvsWindows.View.Refresh();
+        }
+
+        public TimeSpan TotalTime
 		{
 			get { return new TimeSpan(0, 0, Windows.Sum(o => o.TotalSeconds)); }
 		}
@@ -52,9 +74,26 @@ namespace WorkClocker.ViewModel
         public AppGroup()
         {
             Windows = new ObservableCollection<TimeSlot>();
+
+            CvsWindows = new CollectionViewSource {Source = Windows};
+            CvsWindows.Filter += ApplyFilter;
         }
 
-		public AppGroup(WindowExe exe)
+        private void ApplyFilter(object sender, FilterEventArgs e)
+        {
+            var tsvm = (TimeSlot) e.Item;
+
+            if (string.IsNullOrWhiteSpace(Filter) || Filter.Length == 0)
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                e.Accepted = tsvm.Title.Contains(Filter);
+            }
+        }
+
+        public AppGroup(WindowExe exe)
 		{
 			App = exe;
 			Windows = new ObservableCollection<TimeSlot>();
