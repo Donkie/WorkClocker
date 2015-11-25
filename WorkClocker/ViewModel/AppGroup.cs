@@ -23,6 +23,7 @@ namespace WorkClocker.ViewModel
         public ICollectionView AllWindows => CvsWindows.View;
 
         private string _filter;
+        [XmlIgnore]
         public string Filter
         {
             get { return _filter; }
@@ -59,6 +60,7 @@ namespace WorkClocker.ViewModel
 			}
 		}
 
+        [XmlIgnore]
         public bool? FilterIncluded
         {
             get
