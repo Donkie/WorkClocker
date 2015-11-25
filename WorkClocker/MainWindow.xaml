@@ -105,7 +105,10 @@
                             </StackPanel>
                         </Expander.Header>
                         <DockPanel>
-                            <TextBox Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged}"/>
+                            <DockPanel DockPanel.Dock="Top" Margin="0,2">
+                                <CheckBox DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center" IsThreeState="True" IsChecked="{Binding FilterIncluded}" Margin="2,0"/>
+                                <TextBox DockPanel.Dock="Right" Text="{Binding Path=Filter, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DockPanel>
                             <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding AllWindows}" MaxHeight="300">
                                 <ListView.Resources>
                                     <DataTemplate DataType="{x:Type viewModel:TimeSlot}">

@@ -23,7 +23,9 @@ namespace WorkClocker.ViewModel
 				if (value == _included) return;
 				_included = value;
 				PropChanged();
-			}
+
+                PropChanged("FilterIncluded");
+            }
 		}
 
 		public int Seconds

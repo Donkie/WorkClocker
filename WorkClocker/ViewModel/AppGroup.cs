@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using WorkClocker.Annotations;
 using WorkClocker.Helpers;
@@ -57,6 +58,29 @@ namespace WorkClocker.ViewModel
 			}
 		}
 
+        public bool? FilterIncluded
+        {
+            get
+            {
+                var i = Windows.Count(v => v.Included);
+                if (i == 0)
+                    return false;
+                if (i == Windows.Count)
+                    return true;
+
+                return null;
+            }
+            set
+            {
+                var boolin = false;
+                if (value != null)
+                    boolin = (bool) value;
+
+                foreach (TimeSlot v in AllWindows)
+                    v.Included = boolin;
+            }
+        }
+
 		public bool Included
 		{
 			get { return _included; }
@@ -66,7 +90,7 @@ namespace WorkClocker.ViewModel
 				_included = value;
 				PropChanged();
 
-				PropChanged("IncludedTime");
+                PropChanged("IncludedTime");
 				PropChanged("ExcludedTime");
 			}
 		}
@@ -133,7 +157,8 @@ namespace WorkClocker.ViewModel
             PropChanged("IncludedTime");
 			PropChanged("ExcludedTime");
 			PropChanged("TotalTime");
-		}
+            PropChanged("FilterIncluded");
+        }
 
 		public void TimeSlot_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -141,6 +166,7 @@ namespace WorkClocker.ViewModel
 			PropChanged("IncludedTime");
             PropChanged("ExcludedTime");
             PropChanged("TotalTime");
+            PropChanged("FilterIncluded");
 		}
 
         #region INotifyPropertyChanged
