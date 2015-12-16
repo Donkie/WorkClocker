@@ -61,7 +61,8 @@ namespace WorkClocker.Helpers
 		        return new WindowExe
 		        {
 		            Title = sb.ToString(),
-		            Exe = f.Name.Remove(f.Name.Length - f.Extension.Length, f.Extension.Length)
+		            Exe = f.Name.Remove(f.Name.Length - f.Extension.Length, f.Extension.Length),
+                    Path = f.FullName
 		        };
 		    }
 		    catch (AccessViolationException e)

@@ -124,7 +124,10 @@ namespace WorkClocker.ViewModel
 		{
 			App = exe;
 			Windows = new ObservableCollection<TimeSlot>();
-		}
+
+            CvsWindows = new CollectionViewSource { Source = Windows };
+            CvsWindows.Filter += ApplyFilter;
+        }
         
 		public void IncrementWindow(string title, int lastAction, int timeInc)
 		{
