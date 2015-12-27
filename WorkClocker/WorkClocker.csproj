@@ -38,7 +38,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>WorkClocker.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +85,7 @@
     <Reference Include="MouseKeyboardActivityMonitor, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\MouseKeyboardActivityMonitor.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -103,10 +104,11 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
+    <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    </Page>
+    <Compile Include="Helpers\EmbeddedAssembly.cs" />
     <Compile Include="Helpers\ListExtension.cs" />
     <Compile Include="Helpers\WindowExe.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -167,15 +169,15 @@
   <ItemGroup>
     <None Include="Resources\clock.ico" />
     <None Include="Resources\application.ico" />
+    <Resource Include="References\MouseKeyboardActivityMonitor.xml" />
     <Resource Include="Resources\clock_pause.png" />
     <Resource Include="Resources\clock_delete.png" />
     <Resource Include="Resources\clock_play.png" />
     <Resource Include="Resources\folder.png" />
     <Resource Include="Resources\disk.png" />
-    <Content Include="References\MouseKeyboardActivityMonitor.dll" />
+    <EmbeddedResource Include="References\MouseKeyboardActivityMonitor.dll" />
     <Resource Include="Resources\wrench.png" />
     <Resource Include="Resources\clock.png" />
-    <Resource Include="References\MouseKeyboardActivityMonitor.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

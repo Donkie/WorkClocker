@@ -17,7 +17,6 @@ Debug/
 Release/
 !**/bin/x64/Release/
 !**/bin/x86/Release/
-References/
 build/
 bld/
 [Oo]bj/
