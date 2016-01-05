@@ -90,7 +90,7 @@
             </ListView.ItemContainerStyle>
             <ListView.Resources>
                 <DataTemplate DataType="{x:Type viewModel:AppGroup}">
-                    <Expander>
+                    <Expander ToolTip="{Binding App.Exe}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}" VerticalAlignment="Center" VerticalContentAlignment="Center" IsChecked="{Binding Included}" Margin="5"/>
@@ -113,7 +113,7 @@
                             <ListView DockPanel.Dock="Bottom" ItemsSource="{Binding AllWindows}" MaxHeight="300">
                                 <ListView.Resources>
                                     <DataTemplate DataType="{x:Type viewModel:TimeSlot}">
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" ToolTip="{Binding Title}">
                                             <CheckBox IsChecked="{Binding Included}" Margin="5" VerticalAlignment="Center" VerticalContentAlignment="Center" ToolTip="{x:Static properties:Resources.IncudedCheckboxTooltip}"/>
                                             <TextBlock Text="{Binding Time, StringFormat={x:Static properties:Resources.TotalFormat}}" Margin="5,3"
                                                        VerticalAlignment="Center">
