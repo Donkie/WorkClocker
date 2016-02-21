@@ -7,7 +7,7 @@
         xmlns:properties="clr-namespace:WorkClocker.Properties"
         xmlns:converters="clr-namespace:WorkClocker.Helpers.Converters"
         mc:Ignorable="d"
-        Title="{StaticResource AppTitle}" Height="350" Width="800" MinHeight="350" MinWidth="800" d:DataContext="{d:DesignInstance viewModel:ViewModel}" Icon="Resources/clock.png" Closing="Window_Closing">
+        Title="{StaticResource AppTitle}" Height="350" Width="687.5" MinHeight="350" MinWidth="800" d:DataContext="{d:DesignInstance viewModel:ViewModel}" Icon="Resources/clock.png" Closing="Window_Closing" Initialized="Window_Initialized" Loaded="Window_Loaded">
     <Window.Resources>
         <converters:BooleanColorConverter x:Key="IncludedConverter" True="Green" False="Red"/>
     </Window.Resources>

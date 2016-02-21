@@ -106,6 +106,11 @@ namespace WorkClocker.ViewModel
 			Timer.Start();
 		}
 
+        public bool IsRunning()
+        {
+            return Timer.IsEnabled;
+        }
+
         private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WorkClocker.xml");
         public void LoadFromDisk()
         {

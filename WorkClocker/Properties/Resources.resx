@@ -184,4 +184,10 @@
   <data name="clockico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clock.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="clock_off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clock_off.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clock_on" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clock_on.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

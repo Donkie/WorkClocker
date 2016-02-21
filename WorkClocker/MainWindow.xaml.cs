@@ -22,7 +22,9 @@ namespace WorkClocker
         private readonly KeyboardHookListener _keyboardListener;
 	    private readonly WindowExe _afkExe = new WindowExe {Title = "Away From Keyboard", Exe = "Away From Keyboard", IsAfkExe = true};
 
-	    public int LastAction => _stopwatch.Elapsed.Seconds;
+        private System.Windows.Forms.NotifyIcon _notifyIcon;
+
+        public int LastAction => _stopwatch.Elapsed.Seconds;
 
 	    public MainWindow()
 		{
@@ -46,6 +48,8 @@ namespace WorkClocker
             _keyboardListener.KeyDown += ActionListener;
 
             _viewModel.LoadFromDisk();
+
+	        Stop();
 		}
 
         private void ActionListener(object sender, object e)
@@ -87,18 +91,40 @@ namespace WorkClocker
 			}
 		}
 
+	    public void Start()
+        {
+            _viewModel.Start();
+            StartButton.IsEnabled = false;
+            PauseButton.IsEnabled = true;
+
+            _notifyIcon.Icon = Properties.Resources.clock_on;
+        }
+
+	    public void Stop()
+        {
+            _viewModel.Stop();
+            StartButton.IsEnabled = true;
+            PauseButton.IsEnabled = false;
+
+	        _notifyIcon.Icon = Properties.Resources.clock_off;
+        }
+
+	    public void ToggleOnOff()
+	    {
+	        if (_viewModel.IsRunning())
+	            Stop();
+	        else
+	            Start();
+	    }
+
 		private void StartButton_Click(object sender, RoutedEventArgs e)
 		{
-			_viewModel.Start();
-			StartButton.IsEnabled = false;
-			PauseButton.IsEnabled = true;
+		    Start();
 		}
 
 		private void PauseButton_Click(object sender, RoutedEventArgs e)
 		{
-			_viewModel.Stop();
-            StartButton.IsEnabled = true;
-            PauseButton.IsEnabled = false;
+		    Stop();
 		}
 
 		private void ResetButton_Click(object sender, RoutedEventArgs e)
@@ -127,6 +153,28 @@ namespace WorkClocker
         {
             _viewModel.Reset();
             _viewModel.LoadFromDisk();
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            _notifyIcon = new System.Windows.Forms.NotifyIcon();
+            _notifyIcon.Click += notifyIcon_Click;
+            _notifyIcon.DoubleClick += notifyIcon_DoubleClick;
+        }
+
+	    private void notifyIcon_DoubleClick(object sender, EventArgs e)
+	    {
+	        ToggleOnOff();
+	    }
+
+	    private void notifyIcon_Click(object sender, EventArgs e)
+	    {
+	        Activate();
+	    }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _notifyIcon.Visible = true;
         }
     }
 }

@@ -167,6 +167,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\clock_on.ico" />
+    <None Include="Resources\clock_off.ico" />
     <None Include="Resources\clock.ico" />
     <None Include="Resources\application.ico" />
     <Resource Include="References\MouseKeyboardActivityMonitor.xml" />
